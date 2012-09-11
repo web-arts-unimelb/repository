@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Repository Export Views feature.
+ */
+
+include_once 'repository_export_views.features.inc';
