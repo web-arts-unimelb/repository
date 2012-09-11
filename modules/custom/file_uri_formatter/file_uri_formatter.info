@@ -1,0 +1,6 @@
+name = File URI Formatter
+description = "Add a URI formatter for file fields"
+core = 7.x
+package = Fields
+dependencies[] = file
+files[] = file_uri_formatter.module

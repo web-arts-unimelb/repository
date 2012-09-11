@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * Add a URI formatter for file fields
+ */
+ 
+/**
+ * Implements hook_theme().
+ */
+function file_uri_formatter_theme() {
+  return array(
+    'file_uri_formatter' => array(
+      'variables' => array(
+        'item' => NULL, 
+      ),
+    ),
+  );
+}
+ 
+/**
+ * Implements hook_field_formatter_info().
+ */
+function file_uri_formatter_field_formatter_info() {
+  $formatters = array(
+    'file_uri' => array(
+      'label' => t('File URI'),
+      'field types' => array('file', 'image'),
+    ),
+  );
+
+  return $formatters;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function file_uri_formatter_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  return array();
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function file_uri_formatter_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary[] = t('Internal file URI');
+
+  return implode('<br />', $summary);
+}
+/**
+ * Implements hook_field_formatter_view().
+ */
+function file_uri_formatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'file_uri':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#theme' => 'file_uri_formatter',
+          '#item' => $item,
+        );
+      }
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Returns HTML for a file uri field formatter.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - item: An array of file data.
+ *
+ * @ingroup themeable
+ */
+function theme_file_uri_formatter($variables) {
+  $item = $variables['item'];
+  return $variables['item']['uri'];
+}
