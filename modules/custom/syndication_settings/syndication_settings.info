@@ -1,0 +1,17 @@
+name = Syndication Settings
+description = Provides syndication settings for content and taxonomies on the repository site.
+core = 7.x
+package = Faculty of Arts Repository
+version = 7.x-1.0
+project = syndication_settings
+dependencies[] = award
+dependencies[] = feature_profile
+dependencies[] = features
+dependencies[] = field_group
+dependencies[] = taxonomy
+features[features_api][] = api:1
+features[field][] = node-award-field_syndication_site
+features[field][] = node-feature_profile-field_syndication_site
+features[field_group][] = group_shared_syndication|node|award|form
+features[field_group][] = group_shared_syndication|node|feature_profile|form
+features[taxonomy][] = site
