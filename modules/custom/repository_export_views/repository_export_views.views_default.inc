@@ -216,6 +216,144 @@ function repository_export_views_views_default_views() {
   $export['award_syndicate'] = $view;
 
   $view = new view();
+  $view->name = 'equipment_syndicate';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Equipment Syndicate';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['style_plugin'] = 'default';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Relationship: Content: Taxonomy terms on node */
+  $handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
+  $handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
+  $handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
+  $handler->display->display_options['relationships']['term_node_tid']['label'] = 'Site';
+  $handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
+    'site' => 'site',
+    'industry' => 0,
+    'voocab' => 0,
+  );
+  /* Field: Content: Node UUID */
+  $handler->display->display_options['fields']['uuid']['id'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['table'] = 'node';
+  $handler->display->display_options['fields']['uuid']['field'] = 'uuid';
+  $handler->display->display_options['fields']['uuid']['label'] = 'UUID';
+  /* Field: Content: Type */
+  $handler->display->display_options['fields']['field_equipment_type']['id'] = 'field_equipment_type';
+  $handler->display->display_options['fields']['field_equipment_type']['table'] = 'field_data_field_equipment_type';
+  $handler->display->display_options['fields']['field_equipment_type']['field'] = 'field_equipment_type';
+  $handler->display->display_options['fields']['field_equipment_type']['type'] = 'list_key';
+  $handler->display->display_options['fields']['field_equipment_type']['delta_offset'] = '0';
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Name';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = 'Description';
+  /* Field: Content: Booking link */
+  $handler->display->display_options['fields']['field_equipment_booking_link']['id'] = 'field_equipment_booking_link';
+  $handler->display->display_options['fields']['field_equipment_booking_link']['table'] = 'field_data_field_equipment_booking_link';
+  $handler->display->display_options['fields']['field_equipment_booking_link']['field'] = 'field_equipment_booking_link';
+  $handler->display->display_options['fields']['field_equipment_booking_link']['label'] = 'Booking';
+  $handler->display->display_options['fields']['field_equipment_booking_link']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_equipment_booking_link']['type'] = 'link_plain';
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_equipment_image']['id'] = 'field_equipment_image';
+  $handler->display->display_options['fields']['field_equipment_image']['table'] = 'field_data_field_equipment_image';
+  $handler->display->display_options['fields']['field_equipment_image']['field'] = 'field_equipment_image';
+  $handler->display->display_options['fields']['field_equipment_image']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_equipment_image']['type'] = 'image_url';
+  $handler->display->display_options['fields']['field_equipment_image']['settings'] = array(
+    'image_style' => '',
+    'image_link' => '',
+  );
+  /* Field: Content: Manual */
+  $handler->display->display_options['fields']['field_equipment_manual']['id'] = 'field_equipment_manual';
+  $handler->display->display_options['fields']['field_equipment_manual']['table'] = 'field_data_field_equipment_manual';
+  $handler->display->display_options['fields']['field_equipment_manual']['field'] = 'field_equipment_manual';
+  $handler->display->display_options['fields']['field_equipment_manual']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_equipment_manual']['type'] = 'link_plain';
+  /* Field: Content: Resource */
+  $handler->display->display_options['fields']['field_equipment_resource']['id'] = 'field_equipment_resource';
+  $handler->display->display_options['fields']['field_equipment_resource']['table'] = 'field_data_field_equipment_resource';
+  $handler->display->display_options['fields']['field_equipment_resource']['field'] = 'field_equipment_resource';
+  $handler->display->display_options['fields']['field_equipment_resource']['label'] = 'Resource Title';
+  $handler->display->display_options['fields']['field_equipment_resource']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_equipment_resource']['type'] = 'link_title_plain';
+  $handler->display->display_options['fields']['field_equipment_resource']['delta_offset'] = '0';
+  /* Field: Content: Resource */
+  $handler->display->display_options['fields']['field_equipment_resource_1']['id'] = 'field_equipment_resource_1';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['table'] = 'field_data_field_equipment_resource';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['field'] = 'field_equipment_resource';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['label'] = 'Resource Link';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['type'] = 'link_plain';
+  $handler->display->display_options['fields']['field_equipment_resource_1']['delta_offset'] = '0';
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Contextual filter: Taxonomy term: Name */
+  $handler->display->display_options['arguments']['name']['id'] = 'name';
+  $handler->display->display_options['arguments']['name']['table'] = 'taxonomy_term_data';
+  $handler->display->display_options['arguments']['name']['field'] = 'name';
+  $handler->display->display_options['arguments']['name']['relationship'] = 'term_node_tid';
+  $handler->display->display_options['arguments']['name']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['name']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['name']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['name']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['name']['limit'] = '0';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'equipment' => 'equipment',
+  );
+
+  /* Display: Data export */
+  $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
+  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '0';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_xml';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['transform'] = 1;
+  $handler->display->display_options['style_options']['transform_type'] = 'pascal';
+  $handler->display->display_options['path'] = 'repository/export/%/equipment';
+  $export['equipment_syndicate'] = $view;
+
+  $view = new view();
   $view->name = 'industry_syndicate';
   $view->description = '';
   $view->tag = 'default';
@@ -278,6 +416,8 @@ function repository_export_views_views_default_views() {
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '0';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_xml';
   $handler->display->display_options['style_options']['provide_file'] = 0;
   $handler->display->display_options['style_options']['parent_sort'] = 0;
