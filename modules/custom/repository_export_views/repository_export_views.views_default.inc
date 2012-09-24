@@ -37,7 +37,7 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['relationships']['term_node_tid']['label'] = 'Site';
   $handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
     'site' => 'site',
-    'careers' => 0,
+    'industry' => 0,
     'voocab' => 0,
   );
   /* Field: Content: Node UUID */
@@ -83,12 +83,11 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_year_level']['field'] = 'field_award_year_level';
   $handler->display->display_options['fields']['field_award_year_level']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_year_level']['delta_offset'] = '0';
-  /* Field: Content: Area of study */
+  /* Field: Broken/missing handler */
   $handler->display->display_options['fields']['field_award_area_of_study']['id'] = 'field_award_area_of_study';
   $handler->display->display_options['fields']['field_award_area_of_study']['table'] = 'field_data_field_award_area_of_study';
   $handler->display->display_options['fields']['field_award_area_of_study']['field'] = 'field_award_area_of_study';
-  $handler->display->display_options['fields']['field_award_area_of_study']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_award_area_of_study']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_area_of_study']['label'] = 'Area of study';
   /* Field: Content: Travel support */
   $handler->display->display_options['fields']['field_award_travel_support']['id'] = 'field_award_travel_support';
   $handler->display->display_options['fields']['field_award_travel_support']['table'] = 'field_data_field_award_travel_support';
@@ -217,11 +216,11 @@ function repository_export_views_views_default_views() {
   $export['award_syndicate'] = $view;
 
   $view = new view();
-  $view->name = 'careers_syndicate';
+  $view->name = 'industry_syndicate';
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'taxonomy_term_data';
-  $view->human_name = 'Careers Syndicate';
+  $view->human_name = 'Industry Syndicate';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -272,7 +271,7 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['filters']['machine_name']['table'] = 'taxonomy_vocabulary';
   $handler->display->display_options['filters']['machine_name']['field'] = 'machine_name';
   $handler->display->display_options['filters']['machine_name']['value'] = array(
-    'careers' => 'careers',
+    'industry' => 'industry',
   );
 
   /* Display: Data export */
@@ -284,8 +283,8 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['style_options']['parent_sort'] = 0;
   $handler->display->display_options['style_options']['transform'] = 1;
   $handler->display->display_options['style_options']['transform_type'] = 'pascal';
-  $handler->display->display_options['path'] = 'repository/export/career';
-  $export['careers_syndicate'] = $view;
+  $handler->display->display_options['path'] = 'repository/export/tags/industry';
+  $export['industry_syndicate'] = $view;
 
   $view = new view();
   $view->name = 'profile_syndicate';
@@ -314,7 +313,7 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['relationships']['term_node_tid']['label'] = 'Site';
   $handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
     'site' => 'site',
-    'careers' => 0,
+    'industry' => 0,
     'voocab' => 0,
   );
   /* Field: Content: Node UUID */
@@ -412,6 +411,17 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = 'About';
+  /* Field: Content: Image */
+  $handler->display->display_options['fields']['field_profile_images']['id'] = 'field_profile_images';
+  $handler->display->display_options['fields']['field_profile_images']['table'] = 'field_data_field_profile_images';
+  $handler->display->display_options['fields']['field_profile_images']['field'] = 'field_profile_images';
+  $handler->display->display_options['fields']['field_profile_images']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_profile_images']['type'] = 'image_url';
+  $handler->display->display_options['fields']['field_profile_images']['settings'] = array(
+    'image_style' => '',
+    'image_link' => '',
+  );
+  $handler->display->display_options['fields']['field_profile_images']['delta_offset'] = '0';
   /* Field: Content: Published */
   $handler->display->display_options['fields']['status']['id'] = 'status';
   $handler->display->display_options['fields']['status']['table'] = 'node';

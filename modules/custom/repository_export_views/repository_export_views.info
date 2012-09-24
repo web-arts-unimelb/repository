@@ -14,5 +14,5 @@ dependencies[] = views_data_export
 features[ctools][] = views:views_default:3.0
 features[features_api][] = api:1
 features[views_view][] = award_syndicate
-features[views_view][] = careers_syndicate
+features[views_view][] = industry_syndicate
 features[views_view][] = profile_syndicate
