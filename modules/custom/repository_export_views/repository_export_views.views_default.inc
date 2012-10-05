@@ -60,6 +60,7 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_process']['field'] = 'field_award_process';
   $handler->display->display_options['fields']['field_award_process']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_process']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_process']['separator'] = '|';
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
@@ -71,23 +72,20 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_students']['field'] = 'field_award_students';
   $handler->display->display_options['fields']['field_award_students']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_students']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_students']['separator'] = '|';
   /* Field: Content: Study level */
   $handler->display->display_options['fields']['field_award_study_level']['id'] = 'field_award_study_level';
   $handler->display->display_options['fields']['field_award_study_level']['table'] = 'field_data_field_award_study_level';
   $handler->display->display_options['fields']['field_award_study_level']['field'] = 'field_award_study_level';
   $handler->display->display_options['fields']['field_award_study_level']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_study_level']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_study_level']['separator'] = '|';
   /* Field: Content: Year level */
   $handler->display->display_options['fields']['field_award_year_level']['id'] = 'field_award_year_level';
   $handler->display->display_options['fields']['field_award_year_level']['table'] = 'field_data_field_award_year_level';
   $handler->display->display_options['fields']['field_award_year_level']['field'] = 'field_award_year_level';
   $handler->display->display_options['fields']['field_award_year_level']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_year_level']['delta_offset'] = '0';
-  /* Field: Broken/missing handler */
-  $handler->display->display_options['fields']['field_award_area_of_study']['id'] = 'field_award_area_of_study';
-  $handler->display->display_options['fields']['field_award_area_of_study']['table'] = 'field_data_field_award_area_of_study';
-  $handler->display->display_options['fields']['field_award_area_of_study']['field'] = 'field_award_area_of_study';
-  $handler->display->display_options['fields']['field_award_area_of_study']['label'] = 'Area of study';
   /* Field: Content: Travel support */
   $handler->display->display_options['fields']['field_award_travel_support']['id'] = 'field_award_travel_support';
   $handler->display->display_options['fields']['field_award_travel_support']['table'] = 'field_data_field_award_travel_support';
@@ -99,6 +97,7 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_citizenship']['field'] = 'field_award_citizenship';
   $handler->display->display_options['fields']['field_award_citizenship']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_citizenship']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_citizenship']['separator'] = '|';
   /* Field: Content: Financial need */
   $handler->display->display_options['fields']['field_award_financial_need']['id'] = 'field_award_financial_need';
   $handler->display->display_options['fields']['field_award_financial_need']['table'] = 'field_data_field_award_financial_need';
@@ -173,6 +172,13 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_enquire_now']['table'] = 'field_data_field_award_enquire_now';
   $handler->display->display_options['fields']['field_award_enquire_now']['field'] = 'field_award_enquire_now';
   $handler->display->display_options['fields']['field_award_enquire_now']['type'] = 'email_plain';
+  /* Field: Content: Research area */
+  $handler->display->display_options['fields']['field_award_research_area']['id'] = 'field_award_research_area';
+  $handler->display->display_options['fields']['field_award_research_area']['table'] = 'field_data_field_award_research_area';
+  $handler->display->display_options['fields']['field_award_research_area']['field'] = 'field_award_research_area';
+  $handler->display->display_options['fields']['field_award_research_area']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_award_research_area']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_research_area']['separator'] = '|';
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -516,15 +522,19 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_profile_program']['id'] = 'field_profile_program';
   $handler->display->display_options['fields']['field_profile_program']['table'] = 'field_data_field_profile_program';
   $handler->display->display_options['fields']['field_profile_program']['field'] = 'field_profile_program';
+  $handler->display->display_options['fields']['field_profile_program']['type'] = 'taxonomy_term_reference_plain';
   /* Field: Content: Graduate, research */
   $handler->display->display_options['fields']['field_profile_grad_res']['id'] = 'field_profile_grad_res';
   $handler->display->display_options['fields']['field_profile_grad_res']['table'] = 'field_data_field_profile_grad_res';
   $handler->display->display_options['fields']['field_profile_grad_res']['field'] = 'field_profile_grad_res';
   $handler->display->display_options['fields']['field_profile_grad_res']['type'] = 'list_key';
   /* Field: Content: Research area */
-  $handler->display->display_options['fields']['field_profile_area']['id'] = 'field_profile_area';
-  $handler->display->display_options['fields']['field_profile_area']['table'] = 'field_data_field_profile_area';
-  $handler->display->display_options['fields']['field_profile_area']['field'] = 'field_profile_area';
+  $handler->display->display_options['fields']['field_profile_research_area']['id'] = 'field_profile_research_area';
+  $handler->display->display_options['fields']['field_profile_research_area']['table'] = 'field_data_field_profile_research_area';
+  $handler->display->display_options['fields']['field_profile_research_area']['field'] = 'field_profile_research_area';
+  $handler->display->display_options['fields']['field_profile_research_area']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_profile_research_area']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_profile_research_area']['separator'] = '|';
   /* Field: Content: Previous studies */
   $handler->display->display_options['fields']['field_profile_previous_studies']['id'] = 'field_profile_previous_studies';
   $handler->display->display_options['fields']['field_profile_previous_studies']['table'] = 'field_data_field_profile_previous_studies';
@@ -562,6 +572,7 @@ function repository_export_views_views_default_views() {
     'image_link' => '',
   );
   $handler->display->display_options['fields']['field_profile_images']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_profile_images']['separator'] = '|';
   /* Field: Content: Published */
   $handler->display->display_options['fields']['status']['id'] = 'status';
   $handler->display->display_options['fields']['status']['table'] = 'node';
