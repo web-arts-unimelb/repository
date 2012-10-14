@@ -1,0 +1,47 @@
+<?php
+/**
+ * @file url_absolutify.module
+ */
+
+/**
+ * * Implements hook_field_formatter_info().
+ *
+ * A field formatter (text) that removes full links and file references.
+ */
+function url_absolutify_field_formatter_info() {
+  return array(
+    'url_absolutify' => array(
+      'label' => t('Absolute URLs'),
+      'field types' => array('text', 'text_long', 'text_with_summary')
+    )
+  );
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ *
+ * Grab the current site URL and remove it from everywhere in the field.
+ */
+function url_absolutify_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'url_absolutify':
+      global $base_url;
+      foreach ($items as $delta => $item) {
+        if (!empty($item['summary'])) {
+          $output = text_summary($instance, $langcode, $item, 'summary');
+        }
+        else {
+          $output = _text_sanitize($instance, $langcode, $item, 'value');
+          $output = text_summary($output, $instance['settings']['text_processing'] ? $item['format'] : NULL, $display['settings']['trim_length']);
+        }
+        // Rewrite URLs to be absolute, excluding the hostname part.
+        $output = strtr($output, array($base_url => ''));
+        $element[$delta] = array('#markup' => $output);
+      }
+      break;
+  }
+
+  return $element;
+}
