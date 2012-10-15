@@ -5,6 +5,7 @@ package = Faculty of Arts Repository
 php = 5.2.4
 version = 7.x-1.2
 project = syndication_settings
+dependencies[] = arts_faq
 dependencies[] = award
 dependencies[] = equipment
 dependencies[] = feature_profile
