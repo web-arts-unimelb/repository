@@ -7,6 +7,7 @@ version = 7.x-1.2
 project = syndication_settings
 dependencies[] = arts_faq
 dependencies[] = award
+dependencies[] = ctools
 dependencies[] = equipment
 dependencies[] = feature_profile
 dependencies[] = features

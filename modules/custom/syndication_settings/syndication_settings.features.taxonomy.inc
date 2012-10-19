@@ -15,7 +15,7 @@ function syndication_settings_taxonomy_default_vocabularies() {
       'description' => 'This taxonomy us used to tack which site an item of content should be syndicated to.',
       'hierarchy' => '0',
       'module' => 'taxonomy',
-      'weight' => '-7',
+      'weight' => '-5',
       'rdf_mapping' => array(
         'rdftype' => array(
           0 => 'skos:ConceptScheme',
