@@ -710,6 +710,16 @@ function repository_export_views_views_default_views() {
     'multiple_from' => '',
     'multiple_to' => '',
   );
+  /* Field: Content: Internship */
+  $handler->display->display_options['fields']['field_profile_internship']['id'] = 'field_profile_internship';
+  $handler->display->display_options['fields']['field_profile_internship']['table'] = 'field_data_field_profile_internship';
+  $handler->display->display_options['fields']['field_profile_internship']['field'] = 'field_profile_internship';
+  $handler->display->display_options['fields']['field_profile_internship']['type'] = 'taxonomy_term_reference_plain';
+  /* Field: Content: Ambassador */
+  $handler->display->display_options['fields']['field_profile_ambassador']['id'] = 'field_profile_ambassador';
+  $handler->display->display_options['fields']['field_profile_ambassador']['table'] = 'field_data_field_profile_ambassador';
+  $handler->display->display_options['fields']['field_profile_ambassador']['field'] = 'field_profile_ambassador';
+  $handler->display->display_options['fields']['field_profile_ambassador']['type'] = 'list_key';
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
