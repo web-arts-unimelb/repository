@@ -711,10 +711,23 @@ function repository_export_views_views_default_views() {
     'multiple_to' => '',
   );
   /* Field: Content: Internship */
-  $handler->display->display_options['fields']['field_profile_internship']['id'] = 'field_profile_internship';
-  $handler->display->display_options['fields']['field_profile_internship']['table'] = 'field_data_field_profile_internship';
-  $handler->display->display_options['fields']['field_profile_internship']['field'] = 'field_profile_internship';
-  $handler->display->display_options['fields']['field_profile_internship']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_profile_internship_1']['id'] = 'field_profile_internship_1';
+  $handler->display->display_options['fields']['field_profile_internship_1']['table'] = 'field_data_field_profile_internship';
+  $handler->display->display_options['fields']['field_profile_internship_1']['field'] = 'field_profile_internship';
+  $handler->display->display_options['fields']['field_profile_internship_1']['type'] = 'list_key';
+  /* Field: Content: Partner */
+  $handler->display->display_options['fields']['field_profile_partner']['id'] = 'field_profile_partner';
+  $handler->display->display_options['fields']['field_profile_partner']['table'] = 'field_data_field_profile_partner';
+  $handler->display->display_options['fields']['field_profile_partner']['field'] = 'field_profile_partner';
+  $handler->display->display_options['fields']['field_profile_partner']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_profile_partner']['type'] = 'link_title_plain';
+  /* Field: Content: Partner */
+  $handler->display->display_options['fields']['field_profile_partner_1']['id'] = 'field_profile_partner_1';
+  $handler->display->display_options['fields']['field_profile_partner_1']['table'] = 'field_data_field_profile_partner';
+  $handler->display->display_options['fields']['field_profile_partner_1']['field'] = 'field_profile_partner';
+  $handler->display->display_options['fields']['field_profile_partner_1']['label'] = 'PartnerURL';
+  $handler->display->display_options['fields']['field_profile_partner_1']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_profile_partner_1']['type'] = 'link_plain';
   /* Field: Content: Ambassador */
   $handler->display->display_options['fields']['field_profile_ambassador']['id'] = 'field_profile_ambassador';
   $handler->display->display_options['fields']['field_profile_ambassador']['table'] = 'field_data_field_profile_ambassador';
