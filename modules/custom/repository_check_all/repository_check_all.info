@@ -1,0 +1,4 @@
+name = Repository check all button
+description = "Add a check all button"
+core = 7.x
+

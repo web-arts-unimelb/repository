@@ -1,0 +1,90 @@
+<?php
+
+function repository_check_all_form_alter(&$form, &$form_state, $form_id) 
+{
+	switch ($form_id)  
+	{
+  	case 'award_node_form':
+  		//dsm($form_id);  // print form ID to messages
+  		//dsm($form_state);  // pretty print array using Krumo to messages	
+  
+  		$prefix_field_name = "field_award_study_area";
+  		_add_select_all_checkbox($form, $prefix_field_name);
+  	
+  	break;
+  }
+
+}
+
+function _add_select_all_checkbox(&$form, $prefix_field_name)
+{
+	/* 
+	NOTE: the idea way is to use checkbox to select all, but I haven't figure out it yet.
+	
+	$js_string = "
+		function toggle_select_all(cbx) {  
+			if(jQuery(cbx).attr('checked') == true) 
+			{  
+				jQuery(jQuery(cbx).parents('form').get(0)).find('input[name^=\"$prefix_field_name\"]').each(function(){  
+				  if(!this.checked)
+				  {  
+				    this.checked = true;  
+				  }  
+				});  
+			}  
+			else
+			{  
+				jQuery(jQuery(cbx).parents('form').get(0)).find('input[name^=\"$prefix_field_name\"]').each(function(){
+				  if(this.checked)
+				  {  
+				    this.checked = false;  
+				  }  
+				});  
+			} 
+		}";
+
+	//add javascript to the page to handle the select all checkbox  
+	drupal_add_js($js_string, 'inline'); 
+
+	//add the select all checkbox to the form
+	$form['field_award_study_area']['und']["select_all"] = array(  
+		'#type' => 'checkboxes',  
+		'#options' => array(1 => "Select all"),  
+		'#attributes' => array('onchange' => "toggle_select_all(this);"),
+		'#weight' => 0
+	);
+	*/
+	
+	$class_name = $prefix_field_name. "_select_all";
+	$selector = ".". $class_name;
+	
+	$js_string = "
+		jQuery(document).ready(function($){
+			$(\"$selector\").click(function(){
+				$($(this).parents('form').get(0)).find('input[name^=\"$prefix_field_name\"]').each(function(){  
+				  if(!this.checked)
+				  {  
+				    this.checked = true;  
+				  }
+				  else
+				  {
+				  	this.checked = false; 
+				  }
+				});
+					
+			});
+		});
+	";
+	drupal_add_js($js_string, 'inline');
+	
+	$select_all_style = "style=\"padding-top:10px; cursor:pointer; font-size:90%; color:#008FC2; font-weight:bold;\"";
+	$form['field_award_study_area']['und']["select_all"] = array(
+		'#type' => 'markup',
+  	'#markup' => "<p class=\"$class_name\" $select_all_style >Select all</p>",
+		'#weight' => 0
+	);
+	
+	
+}
+
+
