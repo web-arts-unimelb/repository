@@ -1,0 +1,62 @@
+<?php
+/**
+ * @file content_create_access.module
+ * Provide per-user access to create node types.
+ *
+ * @todo: Maybe use the APIs provided by Content Access and ACL.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function content_create_access_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'user_register_form' || $form_id == 'user_profile_form') {
+    if (user_access('administer content types') || user_access('administer users')) {
+      $form['content_create_access'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Content Create Access'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      );
+      $form['content_create_access']['content_create_access_types'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('Content types'),
+        '#description' => t('Check all content types this user should be able to create. If none are checked, the global content settings apply.'),
+        '#options' => node_type_get_names(),
+        '#default_value' => !empty($form['#user']->data['content_create_access_types']) ? $form['#user']->data['content_create_access_types'] : array(),
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_user_presave().
+ *
+ * Store the node-type create permission in the user object.
+ */
+function content_create_access_user_presave(&$edit, $account, $category) {
+  if (isset($edit['content_create_access_types'])) {
+    $types = array_filter($edit['content_create_access_types']);
+    $edit['data']['content_create_access_types'] = $types;
+  }
+}
+
+/**
+ * Implements hook_node_access().
+ *
+ * If there is non-empty node-type create data in the user object,
+ * check whether this user may create this node type. Otherwise,
+ * ignore and let other modules handle access.
+ */
+function content_create_access_node_access($node, $op, $account) {
+  if ($op == 'create') {
+    $type = is_string($node) ? $node : $node->type;
+    if (!empty($account->data['content_create_access_types'])) {
+      if (in_array($type, $account->data['content_create_access_types'])) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+    }
+  }
+  return NODE_ACCESS_IGNORE;
+}

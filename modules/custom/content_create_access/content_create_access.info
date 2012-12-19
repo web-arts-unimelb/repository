@@ -1,0 +1,8 @@
+name = Content Create Access
+description = Provides flexible per-user content create control.
+core = 7.x
+
+package = Access control
+
+dependencies[] = node
+dependencies[] = user
