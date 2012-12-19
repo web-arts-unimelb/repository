@@ -1,0 +1,8 @@
+name = Content Type Access
+description = Provides flexible per-user per-type content access control.
+core = 7.x
+
+package = Access control
+
+dependencies[] = node
+dependencies[] = user

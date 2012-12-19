@@ -1,0 +1,111 @@
+<?php
+/**
+ * @file content_create_access.module
+ * Provide per-user access to create node types.
+ *
+ * @todo: Maybe use the APIs provided by Content Access and ACL.
+ */
+
+/**
+ * Implements hook_form_alter().
+ */
+function content_type_access_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'user_register_form' || $form_id == 'user_profile_form') {
+    if (user_access('administer content types') || user_access('administer users')) {
+      $form['content_type_access'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Content Type Access'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#tree' => TRUE,
+      );
+
+      $types = node_type_get_names();
+      $ops = array(
+        'create' => t('Create'),
+        'update own' => t('Edit own'),
+        'update any' => t('Edit any'),
+        'delete own' => t('Delete own'),
+        'delete any' => t('Delete any'),
+      );
+
+      foreach ($types as $type => $name) {
+        $form['content_type_access'][$type] = array(
+          '#type' => 'fieldset',
+          '#title' => t('@name Access', array('@name' => $name)),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+        );
+        $form['content_type_access'][$type]['access'] = array(
+          '#type' => 'checkboxes',
+          '#title' => t('Access'),
+          '#description' => t('Check all ontent types this user should be able to create. If none are checked, the global content settings apply.'),
+          '#options' => $ops,
+          '#default_value' => !empty($form['#user']->data['content_type_access'][$type]['access']) ? $form['#user']->data['content_type_access'][$type]['access'] : array(),
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_user_presave().
+ *
+ * Store the node-type create permission in the user object.
+ */
+function content_type_access_user_presave(&$edit, $account, $category) {
+  if (isset($edit['content_type_access'])) {
+    // Do not store a million empty arrays.
+    foreach ($edit['content_type_access'] as &$type) {
+      $type['access'] = array_filter($type['access']);
+    }
+    $edit['data']['content_type_access'] = $edit['content_type_access'];
+  }
+}
+
+/**
+ * Implements hook_node_access().
+ *
+ * If there is non-empty node-type create data in the user object,
+ * check whether this user may create this node type. Otherwise,
+ * ignore and let other modules handle access.
+ */
+function content_type_access_node_access($node, $op, $account) {
+  $type = is_string($node) ? $node : $node->type;
+
+  // Early return if this user has no extra perms to check.
+  if (empty($account->data['content_type_access'][$type])) {
+    return NODE_ACCESS_IGNORE;
+  }
+
+  switch($op) {
+    case 'create':
+      if (!empty($account->data['content_access_types'][$type]['access']['create'])) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+      break;
+
+    case 'update':
+      if (
+        !empty($account->data['content_access_types'][$type]['access']['update any']) ||
+        (!empty($account->data['content_access_types'][$type]['access']['update own']) && $node->uid == $account->uid)
+      ) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+      break;
+
+    case 'delete':
+      if (
+        !empty($account->data['content_access_types'][$type]['access']['delete any']) ||
+        (!empty($account->data['content_access_types'][$type]['access']['delete own']) && $node->uid == $account->uid)
+      ) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+      break;
+
+  }
+  return NODE_ACCESS_IGNORE;
+}
