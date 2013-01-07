@@ -88,7 +88,7 @@ function syndication_settings_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_buttons',
-        'weight' => '13',
+        'weight' => '17',
       ),
     ),
   );
