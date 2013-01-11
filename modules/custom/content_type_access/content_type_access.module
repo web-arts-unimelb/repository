@@ -72,7 +72,7 @@ function content_type_access_user_presave(&$edit, $account, $category) {
  */
 function content_type_access_node_access($node, $op, $account) {
   $type = is_string($node) ? $node : $node->type;
-
+	
   // Early return if this user has no extra perms to check.
   if (empty($account->data['content_type_access'][$type])) {
     return NODE_ACCESS_IGNORE;
@@ -80,16 +80,16 @@ function content_type_access_node_access($node, $op, $account) {
 
   switch($op) {
     case 'create':
-      if (!empty($account->data['content_access_types'][$type]['access']['create'])) {
+      if (!empty($account->data['content_type_access'][$type]['access']['create'])) {
         return NODE_ACCESS_ALLOW;
       }
       return NODE_ACCESS_DENY;
       break;
 
-    case 'update':
+    case 'update':      
       if (
-        !empty($account->data['content_access_types'][$type]['access']['update any']) ||
-        (!empty($account->data['content_access_types'][$type]['access']['update own']) && $node->uid == $account->uid)
+        !empty($account->data['content_type_access'][$type]['access']['update any']) ||
+        (!empty($account->data['content_type_access'][$type]['access']['update own']) && $node->uid == $account->uid)
       ) {
         return NODE_ACCESS_ALLOW;
       }
@@ -98,8 +98,8 @@ function content_type_access_node_access($node, $op, $account) {
 
     case 'delete':
       if (
-        !empty($account->data['content_access_types'][$type]['access']['delete any']) ||
-        (!empty($account->data['content_access_types'][$type]['access']['delete own']) && $node->uid == $account->uid)
+        !empty($account->data['content_type_access'][$type]['access']['delete any']) ||
+        (!empty($account->data['content_type_access'][$type]['access']['delete own']) && $node->uid == $account->uid)
       ) {
         return NODE_ACCESS_ALLOW;
       }
