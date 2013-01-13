@@ -58,13 +58,23 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['title']['link_to_node'] = FALSE;
-  /* Field: Content: Process */
-  $handler->display->display_options['fields']['field_award_process']['id'] = 'field_award_process';
-  $handler->display->display_options['fields']['field_award_process']['table'] = 'field_data_field_award_process';
-  $handler->display->display_options['fields']['field_award_process']['field'] = 'field_award_process';
-  $handler->display->display_options['fields']['field_award_process']['type'] = 'list_key';
-  $handler->display->display_options['fields']['field_award_process']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_award_process']['separator'] = '|';
+  /* Field: Content: Award type */
+  $handler->display->display_options['fields']['field_award_type']['id'] = 'field_award_type';
+  $handler->display->display_options['fields']['field_award_type']['table'] = 'field_data_field_award_type';
+  $handler->display->display_options['fields']['field_award_type']['field'] = 'field_award_type';
+  $handler->display->display_options['fields']['field_award_type']['type'] = 'list_key';
+  $handler->display->display_options['fields']['field_award_type']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_type']['separator'] = '|';
+  /* Field: Content: Approximate value */
+  $handler->display->display_options['fields']['field_award_value']['id'] = 'field_award_value';
+  $handler->display->display_options['fields']['field_award_value']['table'] = 'field_data_field_award_value';
+  $handler->display->display_options['fields']['field_award_value']['field'] = 'field_award_value';
+  $handler->display->display_options['fields']['field_award_value']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
   /* Field: Content: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
@@ -84,12 +94,6 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_study_level']['type'] = 'list_key';
   $handler->display->display_options['fields']['field_award_study_level']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_award_study_level']['separator'] = '|';
-  /* Field: Content: Year level */
-  $handler->display->display_options['fields']['field_award_year_level']['id'] = 'field_award_year_level';
-  $handler->display->display_options['fields']['field_award_year_level']['table'] = 'field_data_field_award_year_level';
-  $handler->display->display_options['fields']['field_award_year_level']['field'] = 'field_award_year_level';
-  $handler->display->display_options['fields']['field_award_year_level']['type'] = 'list_key';
-  $handler->display->display_options['fields']['field_award_year_level']['delta_offset'] = '0';
   /* Field: Content: Travel support */
   $handler->display->display_options['fields']['field_award_travel_support']['id'] = 'field_award_travel_support';
   $handler->display->display_options['fields']['field_award_travel_support']['table'] = 'field_data_field_award_travel_support';
@@ -111,20 +115,14 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_other']['id'] = 'field_award_other';
   $handler->display->display_options['fields']['field_award_other']['table'] = 'field_data_field_award_other';
   $handler->display->display_options['fields']['field_award_other']['field'] = 'field_award_other';
-  /* Field: Content: Conditions */
-  $handler->display->display_options['fields']['field_award_conditions']['id'] = 'field_award_conditions';
-  $handler->display->display_options['fields']['field_award_conditions']['table'] = 'field_data_field_award_conditions';
-  $handler->display->display_options['fields']['field_award_conditions']['field'] = 'field_award_conditions';
   /* Field: Content: Application process */
   $handler->display->display_options['fields']['field_award_application_process']['id'] = 'field_award_application_process';
   $handler->display->display_options['fields']['field_award_application_process']['table'] = 'field_data_field_award_application_process';
   $handler->display->display_options['fields']['field_award_application_process']['field'] = 'field_award_application_process';
-  /* Field: Content: Submissions */
-  $handler->display->display_options['fields']['field_award_submissions']['id'] = 'field_award_submissions';
-  $handler->display->display_options['fields']['field_award_submissions']['table'] = 'field_data_field_award_submissions';
-  $handler->display->display_options['fields']['field_award_submissions']['field'] = 'field_award_submissions';
-  $handler->display->display_options['fields']['field_award_submissions']['click_sort_column'] = 'url';
-  $handler->display->display_options['fields']['field_award_submissions']['type'] = 'link_plain';
+  /* Field: Content: Conditions */
+  $handler->display->display_options['fields']['field_award_conditions']['id'] = 'field_award_conditions';
+  $handler->display->display_options['fields']['field_award_conditions']['table'] = 'field_data_field_award_conditions';
+  $handler->display->display_options['fields']['field_award_conditions']['field'] = 'field_award_conditions';
   /* Field: Content: Application open and closing dates */
   $handler->display->display_options['fields']['field_award_application_date']['id'] = 'field_award_application_date';
   $handler->display->display_options['fields']['field_award_application_date']['table'] = 'field_data_field_award_application_date';
@@ -171,18 +169,32 @@ function repository_export_views_views_default_views() {
   $handler->display->display_options['fields']['field_award_uni_trust_record']['field'] = 'field_award_uni_trust_record';
   $handler->display->display_options['fields']['field_award_uni_trust_record']['click_sort_column'] = 'url';
   $handler->display->display_options['fields']['field_award_uni_trust_record']['type'] = 'link_plain';
+  /* Field: Content: Apply link */
+  $handler->display->display_options['fields']['field_award_submissions']['id'] = 'field_award_submissions';
+  $handler->display->display_options['fields']['field_award_submissions']['table'] = 'field_data_field_award_submissions';
+  $handler->display->display_options['fields']['field_award_submissions']['field'] = 'field_award_submissions';
+  $handler->display->display_options['fields']['field_award_submissions']['click_sort_column'] = 'url';
+  $handler->display->display_options['fields']['field_award_submissions']['type'] = 'link_plain';
   /* Field: Content: Enquire now */
   $handler->display->display_options['fields']['field_award_enquire_now']['id'] = 'field_award_enquire_now';
   $handler->display->display_options['fields']['field_award_enquire_now']['table'] = 'field_data_field_award_enquire_now';
   $handler->display->display_options['fields']['field_award_enquire_now']['field'] = 'field_award_enquire_now';
   $handler->display->display_options['fields']['field_award_enquire_now']['type'] = 'email_plain';
-  /* Field: Content: Research area */
-  $handler->display->display_options['fields']['field_award_research_area']['id'] = 'field_award_research_area';
-  $handler->display->display_options['fields']['field_award_research_area']['table'] = 'field_data_field_award_research_area';
-  $handler->display->display_options['fields']['field_award_research_area']['field'] = 'field_award_research_area';
-  $handler->display->display_options['fields']['field_award_research_area']['type'] = 'taxonomy_term_reference_plain';
-  $handler->display->display_options['fields']['field_award_research_area']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_award_research_area']['separator'] = '|';
+  /* Field: Content: Attachments */
+  $handler->display->display_options['fields']['field_award_attachments']['id'] = 'field_award_attachments';
+  $handler->display->display_options['fields']['field_award_attachments']['table'] = 'field_data_field_award_attachments';
+  $handler->display->display_options['fields']['field_award_attachments']['field'] = 'field_award_attachments';
+  $handler->display->display_options['fields']['field_award_attachments']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_award_attachments']['type'] = 'file_url_plain';
+  $handler->display->display_options['fields']['field_award_attachments']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_attachments']['separator'] = '|';
+  /* Field: Content: Area of study */
+  $handler->display->display_options['fields']['field_award_study_area']['id'] = 'field_award_study_area';
+  $handler->display->display_options['fields']['field_award_study_area']['table'] = 'field_data_field_award_study_area';
+  $handler->display->display_options['fields']['field_award_study_area']['field'] = 'field_award_study_area';
+  $handler->display->display_options['fields']['field_award_study_area']['type'] = 'taxonomy_term_reference_plain';
+  $handler->display->display_options['fields']['field_award_study_area']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_award_study_area']['separator'] = '|';
   /* Field: Content: Promoted to front page */
   $handler->display->display_options['fields']['promote']['id'] = 'promote';
   $handler->display->display_options['fields']['promote']['table'] = 'node';
