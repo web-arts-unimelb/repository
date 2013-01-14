@@ -23,6 +23,8 @@ function content_type_access_form_alter(&$form, $form_state, $form_id) {
       $types = node_type_get_names();
       $ops = array(
         'create' => t('Create'),
+        'view own' => t('View own'),
+        'view any' => t('View any'),
         'update own' => t('Edit own'),
         'update any' => t('Edit any'),
         'delete own' => t('Delete own'),
@@ -66,21 +68,32 @@ function content_type_access_user_presave(&$edit, $account, $category) {
 /**
  * Implements hook_node_access().
  *
- * If there is non-empty node-type create data in the user object,
- * check whether this user may create this node type. Otherwise,
- * ignore and let other modules handle access.
+ * If there is non-empty node-type access data in the user object,
+ * check whether this user may perform this operation on this node
+ * type. Otherwise, ignore and let other modules handle access.
  */
 function content_type_access_node_access($node, $op, $account) {
   $type = is_string($node) ? $node : $node->type;
 
   // Early return if this user has no extra perms to check.
-  if (empty($account->data['content_type_access'][$type])) {
+  if (!isset($account->data['content_type_access'][$type])) {
     return NODE_ACCESS_IGNORE;
   }
 
   switch($op) {
     case 'create':
       if (!empty($account->data['content_type_access'][$type]['access']['create'])) {
+        return NODE_ACCESS_ALLOW;
+      }
+      return NODE_ACCESS_DENY;
+      break;
+
+    case 'view':
+      if (
+        !empty($account->data['content_type_access'][$type]['access']['view any']) ||
+        (!empty($account->data['content_type_access'][$type]['access']['view own']) && $node->uid == $account->uid) ||
+        (!empty($account->data['content_type_access'][$type]['access']['create']) && $node->uid == $account->uid) // 'create' is implicit 'view own'.
+      ) {
         return NODE_ACCESS_ALLOW;
       }
       return NODE_ACCESS_DENY;
