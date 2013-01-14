@@ -57,11 +57,35 @@ function content_type_access_form_alter(&$form, $form_state, $form_id) {
  */
 function content_type_access_user_presave(&$edit, $account, $category) {
   if (isset($edit['content_type_access'])) {
-    // Do not store a million empty arrays.
-    foreach ($edit['content_type_access'] as &$type) {
-      $type['access'] = array_filter($type['access']);
+    $flag = FALSE;
+
+    // Check if the array contains at least one setting.
+    foreach ($edit['content_type_access'] as $type => $access) {
+      foreach ($access['access'] as $op) {
+        if (!empty($op)) {
+          $flag = TRUE;
+        }
+      }
     }
+
+    // Only save to the database if there is at least one setting.
+    if ($flag) {
+      $replace = db_query("SELECT COUNT(aid) FROM {content_type_access} WHERE uid = :uid", array(':uid' => $account->uid))->fetchField();
+      foreach ($edit['content_type_access'] as $type => $access) {
+        foreach ($access['access'] as $op => $perm) {
+          $data = array(
+            'uid' => $account->uid,
+            'type' => $type,
+            'op' => $op,
+            'access' => empty($perm) ? 0 : 1,
+          );
+          drupal_write_record('content_type_access', $data, ($replace) ? array('uid', 'type', 'op') : array());
+        }
+      }
+    }
+    // Leave the settings in the account as well, so easy UI-ness. Yes, that's lazy. Sue me.
     $edit['data']['content_type_access'] = $edit['content_type_access'];
+    $edit['data']['content_type_access']['enabled'] = TRUE;
   }
 }
 
@@ -121,4 +145,73 @@ function content_type_access_node_access($node, $op, $account) {
 
   }
   return NODE_ACCESS_IGNORE;
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ *
+ * When querying the node table, inject an access check join if appropriate.
+ */
+function content_type_access_query_node_access_alter(QueryAlterableInterface $query) {
+  // No access perms set for the current user. For now, no checks rather than reject all.
+  if (empty($GLOBALS['user']->data['content_type_access']['enabled'])) {
+    return;
+  }
+
+  // Specific permissions to bypass access checks?
+  if (user_access('administer content') ||
+    user_access('bypass content access control') ||
+    user_access('bypass views access control')) {
+    return;
+  }
+
+  // Fetch the query components we need to mess with.
+  $tables =& $query->getTables();
+  $where =& $query->conditions();
+
+  // Look up the alias for the node table.
+  foreach ($tables as $table) {
+    if ($table['table'] == 'node') {
+      $alias = $table['alias'];
+      break;
+    }
+  }
+
+  // If no alias for the node table, escape!
+  if (empty($alias)) {
+    drupal_set_message(t('Node table not in included in node view, which is very confusing.'), 'error');
+    return;
+  }
+
+  // Join the content_type_access table on the node type, user id and access
+  // grant. This is an inner join, so no access if no match.
+  $query->innerJoin('content_type_access', 'cta', 'cta.type = ' . $alias . '.type AND cta.access = 1 AND cta.uid = ' . $GLOBALS['user']->uid);
+
+  // First up, view own AND node is mine.
+  $own = db_and();
+  $own->condition('cta.op', 'view own');
+  $own->condition($alias . '.uid', $GLOBALS['user']->uid);
+
+  // Next, view any of this kind.
+  $any = db_and();
+  $any->condition('cta.op', 'view any');
+
+  // Create an OR statement with the two previous access checks.
+  $or = db_or();
+  $or->condition($own);
+  $or->condition($any);
+
+  // ...and add it to the query.
+  $query->condition($or);
+}
+
+/**
+ * Implements hook_views_api().
+ *
+ * @todo: Make a useful views data hook :-)
+ */
+function content_type_access_views_api() {
+  return array(
+    'api' => 3,
+  );
 }

@@ -1,0 +1,80 @@
+<?php
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function content_type_access_requirements($phase) {
+  $requirements = array();
+  if (module_exists('content_access') && module_exists('views')) {
+    $requirements['content_type_access'] = array(
+      'title' => t('Content Type Access'),
+      'value' => t('Module conflict'),
+      'description' => t('The <em>Content Access</em> module is enabled and conflicts with <em>Content Type Access</em> when used with <em>Views</em>. Please go the the !link and disable one or the other.', array('!link' => l('modules page', 'admin/modules'))),
+      'severity' => REQUIREMENT_ERROR,
+    );
+  }
+  return $requirements;
+}
+
+/**
+ * Implements hook_schema().
+ */
+function content_type_access_schema() {
+  $schema['content_type_access'] = array(
+    'description' => 'Per node-type per-user access settings.',
+    'fields' => array(
+      'aid' => array(
+        'description' => 'The primary identifier for an access record.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The {users}.uid for this access record.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'type' => array(
+        'description' => 'The {node}.type for this access record.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'op' => array(
+        'description' => 'The operation that is being controlled by this access record.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'access' => array(
+        'description' => 'The grant for this access record; 1 = granted, 0 = rejected.',
+        'type' => 'int',
+        'length' => 1,
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'indexes' => array(
+      'uid' => array('uid'),
+    ),
+    'unique keys' => array(
+      'access' => array('uid', 'type', 'op'),
+    ),
+    'primary key' => array('aid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ */
+function content_type_access_update_7000() {
+  drupal_install_schema('content_type_access');
+}
