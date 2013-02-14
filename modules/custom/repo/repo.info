@@ -1,0 +1,4 @@
+name = Repo
+description = "A module to handle all repo related tasks"
+core = 7.x
+

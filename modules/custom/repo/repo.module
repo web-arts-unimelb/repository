@@ -1,0 +1,16 @@
+<?php
+
+/*
+ * hook_node_presave
+*/
+function repo_node_presave($node) 
+{
+	// Trim the spaces in head and tail of title
+	// Prevent url contains space after import to other sites
+  if($node->type == "award") 
+  {
+		$node->title = trim($node->title);
+  }
+}
+
+
