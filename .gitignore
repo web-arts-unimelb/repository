@@ -7,3 +7,12 @@ aliases.drushrc.php
 database
 files
 private
+
+# Ignore some modules
+modules/custom/alumni_profile
+modules/custom/staff_profile
+modules/custom/student_profile
+modules/custom/uom_ldap
+
+# Ignore others
+misc
