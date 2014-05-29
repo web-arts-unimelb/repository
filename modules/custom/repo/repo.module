@@ -13,14 +13,3 @@ function repo_node_presave($node)
   }
 }
 
-// hook_form_alter
-function repo_form_alter(&$form, &$form_state, $form_id) {
-	if($form_id == 'student_profile_node_form') {
-		unset($form['actions']['preview']); // No preview button
-		$form['actions']['submit']['#value'] = 'Submit';	
-	}
-	else if($form_id == 'alumni_profile_node_form') {
-		unset($form['actions']['preview']); // No preview button
-    $form['actions']['submit']['#value'] = 'Submit';	
-	}
-}
